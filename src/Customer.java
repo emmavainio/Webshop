@@ -5,17 +5,19 @@ public class Customer {
     private String address;
     private String postalCode;
     private int cityId;
+    private String username;
     private String password;
 
     public Customer() {}
 
-    public Customer(int id, String firstName, String lastName, String address, String postalCode, int cityId, String password) {
+    public Customer(int id, String firstName, String lastName, String address, String postalCode, int cityId, String username, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.postalCode = postalCode;
         this.cityId = cityId;
+        this.username = username;
         this.password = password;
     }
 
@@ -73,6 +75,14 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

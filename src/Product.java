@@ -1,18 +1,22 @@
 public class Product {
     private int id;
     private double price;
-    private String productName;
+    private String model;
     private int brandId;
     private int colourId;
+    private int sizeId;
+    private int inventoryId;
 
     public Product(){}
 
-    public Product(int id, double price, String productName, int brandId, int colourId) {
+    public Product(int id, double price, String model, int brandId, int colourId, int sizeId, int inventoryId) {
         this.id = id;
         this.price = price;
-        this.productName = productName;
+        this.model = model;
         this.brandId = brandId;
         this.colourId = colourId;
+        this.sizeId = sizeId;
+        this.inventoryId = inventoryId;
     }
 
     public int getId() {
@@ -31,12 +35,12 @@ public class Product {
         this.price = price;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getModel() {
+        return model;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public int getBrandId() {
@@ -55,8 +59,24 @@ public class Product {
         this.colourId = colourId;
     }
 
+    public int getSizeId() {
+        return sizeId;
+    }
+
+    public void setSizeId(int sizeId) {
+        this.sizeId = sizeId;
+    }
+
+    public int getInventoryId() {
+        return inventoryId;
+    }
+
+    public void setInventoryId(int inventoryId) {
+        this.inventoryId = inventoryId;
+    }
+
     @Override
     public String toString() {
-        return productName;
+        return model + " price: " + price;
     }
 }
