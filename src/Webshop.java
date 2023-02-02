@@ -1,4 +1,3 @@
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -6,6 +5,11 @@ public class Webshop {
 
     final Repository repository = new Repository();
     final Scanner sc = new Scanner(System.in);
+
+    public boolean isCorrectCredentials(String username, String password) {
+        return repository.getCustomerList().stream().anyMatch(c -> c.getUsername().equalsIgnoreCase(username) &&
+                c.getPassword().equalsIgnoreCase(password));
+    }
 
     public Webshop() {
         //prompta skriva in namn och lösen
@@ -21,9 +25,8 @@ public class Webshop {
             System.out.print("Enter your password: ");
             final String password = sc.nextLine().trim();
 
-            if (repository.getCustomerList().stream().anyMatch(c -> c.getUsername().equalsIgnoreCase(username) &&
-                    c.getPassword().equalsIgnoreCase(password))) {
-                System.out.println("Login successful");
+            if (isCorrectCredentials(username,password)) {
+                System.out.println("Login successful!");
                 break;
             }
             else
