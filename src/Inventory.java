@@ -8,6 +8,13 @@ public class Inventory {
 
     public Inventory() {}
 
+    public Inventory(int id, int amount, Timestamp created, Timestamp lastUpdate) {
+        this.id = id;
+        this.amount = amount;
+        this.created = created;
+        this.lastUpdate = lastUpdate;
+    }
+
     public Inventory(int amount) {
         this.amount = amount;
     }

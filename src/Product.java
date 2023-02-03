@@ -2,21 +2,21 @@ public class Product {
     private int id;
     private double price;
     private String model;
-    private int brandId;
-    private int colourId;
-    private int sizeId;
-    private int inventoryId;
+    private Brand brand;
+    private Colour colour;
+    private Size size;
+    private Inventory inventory;
 
     public Product(){}
 
-    public Product(int id, double price, String model, int brandId, int colourId, int sizeId, int inventoryId) {
+    public Product(int id, double price, String model, Brand brand, Colour colour, Size size, Inventory inventory) {
         this.id = id;
         this.price = price;
         this.model = model;
-        this.brandId = brandId;
-        this.colourId = colourId;
-        this.sizeId = sizeId;
-        this.inventoryId = inventoryId;
+        this.brand = brand;
+        this.colour = colour;
+        this.size = size;
+        this.inventory = inventory;
     }
 
     public int getId() {
@@ -43,40 +43,41 @@ public class Product {
         this.model = model;
     }
 
-    public int getBrandId() {
-        return brandId;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setBrandId(int brandId) {
-        this.brandId = brandId;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
-    public int getColourId() {
-        return colourId;
+    public Colour getColour() {
+        return colour;
     }
 
-    public void setColourId(int colourId) {
-        this.colourId = colourId;
+    public void setColour(Colour colour) {
+        this.colour = colour;
     }
 
-    public int getSizeId() {
-        return sizeId;
+    public Size getSize() {
+        return size;
     }
 
-    public void setSizeId(int sizeId) {
-        this.sizeId = sizeId;
+    public void setSize(Size size) {
+        this.size = size;
     }
 
-    public int getInventoryId() {
-        return inventoryId;
+    public Inventory getInventory() {
+        return inventory;
     }
 
-    public void setInventoryId(int inventoryId) {
-        this.inventoryId = inventoryId;
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     @Override
     public String toString() {
-        return model + " price: " + price;
+        return "Brand: " + brand.getBrand() + " | Model: " + model + " | Colour: " + colour.getColour()
+                + " | Size: " + size.getSize() + " | Price: " + price;
     }
 }
