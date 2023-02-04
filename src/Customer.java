@@ -4,19 +4,19 @@ public class Customer {
     private String lastName;
     private String address;
     private String postalCode;
-    private int cityId;
     private String username;
     private String password;
+    private City city;
 
     public Customer() {}
 
-    public Customer(int id, String firstName, String lastName, String address, String postalCode, int cityId, String username, String password) {
+    public Customer(int id, String firstName, String lastName, String address, String postalCode, City city, String username, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.postalCode = postalCode;
-        this.cityId = cityId;
+        this.city = city;
         this.username = username;
         this.password = password;
     }
@@ -61,12 +61,12 @@ public class Customer {
         this.postalCode = postalCode;
     }
 
-    public int getCityId() {
-        return cityId;
+    public City getCity() {
+        return city;
     }
 
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public String getPassword() {
@@ -87,6 +87,6 @@ public class Customer {
 
     @Override
     public String toString () {
-        return firstName + " " + lastName;
+        return firstName + " " + lastName + ", " + address + ", " + postalCode + " " + city.getCity();
     }
 }

@@ -1,16 +1,19 @@
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
     private int id;
     private Timestamp purchaseDate;
-    private int customerId;
-
+    private Customer customer;
+    private List<Product> orderedProducts = new ArrayList<>();
     public Order() {}
 
-    public Order(int id, Timestamp purchaseDate, int customerId) {
+    public Order(int id, Timestamp purchaseDate, Customer customer, List<Product> orderedProducts) {
         this.id = id;
         this.purchaseDate = purchaseDate;
-        this.customerId = customerId;
+        this.customer = customer;
+        this.orderedProducts = orderedProducts;
     }
 
     public int getId() {
@@ -29,11 +32,19 @@ public class Order {
         this.purchaseDate = purchaseDate;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public List<Product> getOrderedProducts() {
+        return orderedProducts;
+    }
+
+    public void setOrderedProducts(List<Product> orderedProducts) {
+        this.orderedProducts = orderedProducts;
     }
 }
