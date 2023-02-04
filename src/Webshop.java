@@ -17,11 +17,14 @@ public class Webshop {
     public Product getProduct(String brand, String model, String colour, String size) {
         return getAllAvailableProducts().stream().filter(p -> p.getBrand().getBrand().equalsIgnoreCase(brand) &&
                 p.getModel().equalsIgnoreCase(model) && p.getColour().getColour().equalsIgnoreCase(colour) &&
-        p.getSize().getSize().equalsIgnoreCase(size)).toList().get(0);
+                p.getSize().getSize().equalsIgnoreCase(size)).toList().get(0);
     }
     public boolean isAvailableProduct(String brand, String model, String colour, String size) {
-        return repository.getProductList().stream().anyMatch(p -> p.getBrand().getBrand().equalsIgnoreCase(brand) &&
-                p.getModel().equalsIgnoreCase(model) && p.getColour().getColour().equalsIgnoreCase(colour) &&
+        return repository.getProductList().stream().anyMatch(p ->
+                p.getInventory().getAmount() > 0 &&
+                p.getBrand().getBrand().equalsIgnoreCase(brand) &&
+                p.getModel().equalsIgnoreCase(model) &&
+                p.getColour().getColour().equalsIgnoreCase(colour) &&
                 p.getSize().getSize().equalsIgnoreCase(size));
     }
     public int getCustomerId (String username) {
@@ -68,6 +71,8 @@ public class Webshop {
                 repository.addToCart(customerId,productId);
                 break;
             }
+            else
+                System.out.println("The product does not exist or is out of stock");
         }
     }
     public static void main(String[] args) {
