@@ -5,8 +5,8 @@ import java.util.*;
 
 public class Repository {
 
-    private Properties p = new Properties();
-    String path = "src/settings.properties";
+    final private Properties p = new Properties();
+    final String path = "src/settings.properties";
 
     public Repository() {
         try {
@@ -16,6 +16,35 @@ public class Repository {
         }
     }
 
+    public Map<Integer, Customer> getCustomerMap() {
+        Map<Integer, Customer> customerMap = new HashMap<>();
+        final String query = "select customer.id as customerid, first_name, last_name, address, postal_code, " +
+                "username, password, city.id as cityid, city from Customer " +
+                "inner join city on city.id = customer.city_id";
+        try (Connection con = DriverManager.getConnection(
+                p.getProperty("connectionString"),
+                p.getProperty("name"),
+                p.getProperty("password"));
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(query)
+        ) {
+            while (rs.next()) {
+                Customer temp = new Customer();
+                temp.setId(rs.getInt("customerid"));
+                temp.setFirstName(rs.getString("first_name"));
+                temp.setLastName(rs.getString("last_name"));
+                temp.setAddress(rs.getString("address"));
+                temp.setPostalCode(rs.getString("postal_code"));
+                temp.setUsername(rs.getString("username"));
+                temp.setPassword(rs.getString("password"));
+                temp.setCity(new City(rs.getInt("cityid"), rs.getString("city")));
+                customerMap.put(temp.getId(), temp);
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return customerMap;
+    }
     public List<Customer> getCustomerList() {
         List<Customer> customerList = new ArrayList<>();
         final String query = "select customer.id as customerid, first_name, last_name, address, postal_code, " +
@@ -84,7 +113,7 @@ public class Repository {
                 p.getProperty("connectionString"),
                 p.getProperty("name"),
                 p.getProperty("password"));
-             CallableStatement stmt = con.prepareCall(query);
+             CallableStatement stmt = con.prepareCall(query)
         ) {
             stmt.setInt(1, customerId);
             stmt.setInt(2, productId);
@@ -98,11 +127,12 @@ public class Repository {
         }
     }
     public List<Order> getOrderList() {
+
         List<Order> orderList = new ArrayList<>();
-        final String query = "select `order`.id as orderid, purchase_date, customer.id as customerid, first_name, " +
-                "last_name, address, postal_code, username, password, city.id as cityid, city from `order` " +
-                "inner join customer on customer.id = customer_id " +
-                "inner join city on city.id = customer.city_id;";
+        Map<Integer, Customer> customerMap= getCustomerMap();
+
+        final String query = "select `order`.id as orderid, purchase_date, customer.id as customerid from `order` " +
+                "inner join customer on customer.id = customer_id";
         try (Connection con = DriverManager.getConnection(
                 p.getProperty("connectionString"),
                 p.getProperty("name"),
@@ -114,10 +144,7 @@ public class Repository {
                 Order temp = new Order();
                 temp.setId(rs.getInt("orderid"));
                 temp.setPurchaseDate(rs.getTimestamp("purchase_date"));
-                temp.setCustomer(new Customer(rs.getInt("customerid"), rs.getString("first_name"),
-                        rs.getString("last_name"), rs.getString("address"),
-                        rs.getString("postal_code"), new City(rs.getInt("cityid"),
-                        rs.getString("city")), rs.getString("username"), rs.getString("password")));
+                temp.setCustomer(customerMap.get(rs.getInt("customerid")));
                 temp.setOrderedProducts(getProductListForOrder(rs.getInt("orderid")));
                 orderList.add(temp);
             }
@@ -142,7 +169,7 @@ public class Repository {
                 p.getProperty("connectionString"),
                 p.getProperty("name"),
                 p.getProperty("password"));
-             PreparedStatement stmt = con.prepareStatement(query);
+             PreparedStatement stmt = con.prepareStatement(query)
         ) {
             stmt.setInt(1, orderNr);
             ResultSet rs = stmt.executeQuery();
