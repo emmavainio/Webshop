@@ -30,7 +30,7 @@ public class SalesSupport {
     public void printTotalAmountSpentByCustomer() {
         repository.getOrderList().stream().collect(Collectors.groupingBy(Order::getCustomer)).
                 forEach((key, value) -> System.out.println(key.getFirstName() + " " + key.getLastName() +
-                        " Total amount: " + value.stream().flatMap(o -> o.getOrderedProducts().stream()).
+                        " | Total amount: " + value.stream().flatMap(o -> o.getOrderedProducts().stream()).
                         map(Product::getPrice).mapToDouble(e -> e).sum()));
     }
 
@@ -42,8 +42,7 @@ public class SalesSupport {
                 1 - Customer report by size/colour/brand
                 2 - Report including customers and amount of orders
                 3 - Report including customers and amount spent
-                0 - Exit
-                """);
+                0 - Exit""");
             final int reportOption = sc.nextInt();
             if (reportOption == 1) {
                 System.out.println("""
