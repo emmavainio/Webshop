@@ -6,19 +6,14 @@ public class SalesSupport {
     final Repository repository = new Repository();
     final Scanner sc = new Scanner(System.in);
 
-    OrderReportInterface sizeReport = (o, wordToSearch) -> o.getOrderedProducts().stream().anyMatch
-            (product -> product.getSize().getSize().equalsIgnoreCase(wordToSearch));
+    OrderReportInterface sizeReport = (product, wordToSearch) -> product.getSize().getSize().equalsIgnoreCase(wordToSearch);
+    OrderReportInterface colourReport = (product, wordToSearch) -> product.getColour().getColour().equalsIgnoreCase(wordToSearch);
+    OrderReportInterface brandReport = (product, wordToSearch) -> product.getBrand().getBrand().equalsIgnoreCase(wordToSearch);
 
-    OrderReportInterface colourReport = (o, wordToSearch) -> o.getOrderedProducts().stream().anyMatch
-            (product -> product.getColour().getColour().equalsIgnoreCase(wordToSearch));
-
-    OrderReportInterface brandReport = (o, wordToSearch) -> o.getOrderedProducts().stream().anyMatch
-            (product -> product.getBrand().getBrand().equalsIgnoreCase(wordToSearch));
-
-
-    public void printSizeColourBrandReport(String wordToSearchFor, OrderReportInterface reportType){
-        repository.getOrderList().stream().filter(o -> reportType.search(o, wordToSearchFor)).
-                map(Order::getCustomer).distinct().forEach(System.out::println);
+    public void printSizeColourBrandReport(String wordToSearch, OrderReportInterface reportType){
+        repository.getOrderList().stream().filter(o -> o.getOrderedProducts().stream().anyMatch
+                        (p -> reportType.search(p, wordToSearch))).map(Order::getCustomer).
+                        distinct().forEach(System.out::println);
         System.out.println();
     }
     public void printAmountOfOrdersPerCustomer() {
